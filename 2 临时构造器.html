@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+
+
+    <script>
+        function Shape(){}
+        Shape.prototype.name='shape';
+        Shape.prototype.toString=function(){
+            var result=[];
+            if(this.constructor.uber){
+                result[result.length]=this.constructor.uber.toString();
+            }
+            result[result.length]=this.name;
+            return result.join(',');
+        };
+
+
+
+        function TwoDShape(){}
+        var F=function(){};
+        F.protype=Shape.prototype;
+        TwoDShape.prototype=new F();
+        //构造器重置
+        TwoDShape.prototype.constructor=TwoDShape;
+        TwoDShape.uber=Shape.prototype;
+        TwoDShape.prototype.name='2D shape';
+
+
+
+        function Triangle(side,height){
+            this.side=side;
+            this.height=height;
+        }
+        var F=function(){}
+        F.prototype=TwoDShape.prototype;
+        Triangle.prototype=new F();
+        //构造器重置
+        Triangle.prototype.constructor=Triangle;
+        Triangle.uber=TwoDShape.prototype;
+        Triangle.prototype.name='Triangle';
+        Triangle.prototype.getArea=function(){
+            return this.side*this.height/2;
+        };
+
+        var my=new Triangle(5,10);
+        
+        function extend(Child,Parent){
+            var F=function(){
+                F.prototype=Parent.prototype;
+                Child.prototype=new F;
+                Child.prototype.constructor=Child;
+                Child.uber=Parent.prototype;
+            };
+        }
+
+        var Shape=function(){};
+        var TwoDShape=function(){};
+        Shape.prototype.name='shape';
+        Shape.prototype.toString=function(){return this.name;};
+
+
+        function extend2(Child,Parent){
+            var p=Parent.prototype;
+            var c=Child.prototype;
+            for(var i in p){
+                c[i]=p[i];
+            }
+            c.uber=p;
+        }
+        
+
+
+        var A=function(){},B=function(){};
+        A.prototype.stuff=[1,2,3];
+        
+
+
+        function extendCopy(p){
+            var c={};
+            for(var i in p){
+                c[i]=p[i];
+            }
+            c.uber=p;
+            return c;
+        }
+
+
+        var shape={
+            name:'shape',
+            toString:function(){return this.name}
+        }
+
+        var twoDee=extendCopy(shape);
+        twoDee.name='2D shape';
+        twoDee.toString=function(){
+            return this.uber.toString()+','+this.name;
+        };
+
+        var triangle=extendCopy(twoDee);
+        triangle.name='Triangle';
+        triangle.getArea=function(){
+            return this.side*this.height/2;
+        };
+
+
+        function deepCopy(p,c){
+            var c=c||{};
+            for(var i in p){
+                if(typeof p[i] === 'object'){
+                    c[i]=(p[i].constructor === Array ?[]:{});
+                    deepCopy(p[i],c[i]);
+                }else{
+                    c[i]=p[i];
+                }
+            }
+            return c;
+        }
+
+        var parent ={
+            numbers:[1,2,3],
+            letters:['a','b','c'],
+            obj:{
+                prop:1
+            }     ,
+            bool:true
+        };
+
+        var mydeep=deepCopy(parent);
+        var myshallow=extendCopy(parent);
+
+
+        function object(o){
+            function D(){}
+            F.prototype=o;
+            return new F();
+        }
+
+        function object(o){
+            var n;
+            function F(){}
+            F.prototype=o;
+            n=new F();
+            n.uber=o;
+            return n;
+        }
+
+
+
+    </script>
+</body>
+</html>

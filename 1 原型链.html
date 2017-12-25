@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+        function Shape(){}
+
+        Shape.prototype.name='shape';
+        Shape.prototype.toString=function(){return this.name;}
+        
+
+        function TwoDShape(){}
+        TwoDShape.prototype=Shape.prototype;
+        TwoDShape.prototype.constructor=TwoDShape;
+
+        TwoDShape.prototype.name='2D shape';
+        
+
+        function Triangle(side,height){
+            this.side=side;
+            this.height=height;
+        }
+        
+        Triangle.prototype=TwoDShape.prototype;
+        Triangle.prototype.constructor=Triangle;
+
+        Triangle.prototype.name='Triangle';
+        Triangle.prototype.getArea=function(){
+            return this.side*this.height/2;
+        };
+        
+        var my=new Triangle(5,10);
+
+
+    </script>
+</body>
+</html>
