@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <p class="opener">first paragraph</p>
+    <p><em>second</em>paragraph</p>
+    <p id="closer">final</p>
+    <!-- and that's about it -->
+
+    <form action="">
+
+        <input name="search" type="text" id="search" size="50" maxlength="255" value="Enter email...">
+
+    </form>
+
+    <!-- <div onclick="alert('Ouch!')">
+        click
+    </div> -->
+
+    <div id="my-div">
+        click
+    </div>
+
+    <ul>
+        <li><a href="##">my blog</a></li>
+    </ul>
+
+
+
+
+
+    <script>
+        var myelement=document.getElementById('my-div');
+        myelement.onclick=function(){
+            alert('Ouch!');
+            alert('And double ouch!');
+        }
+
+
+        function paraHandler(){
+            alert('clicked paragraph');
+        }
+
+        var para=document.getElementById('closer');
+        para.addEventListener('click',paraHandler,false);
+
+    </script>
+
+
+
+    <script>
+        function walkDOM(n){
+            do{
+                 console.log(n);
+                 if(n.hasChildNodes()){
+                     walkDOM(n.firstChild)
+                 }
+            }while(n=n.nextSibling)
+        }
+    
+    </script>
+</body>
+</html>
